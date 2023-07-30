@@ -1,0 +1,185 @@
+hi
+
+create table registration  
+(  
+   Username varchar(100),  
+   Email varchar(100),  
+   Password varchar(20)  
+)  
+
+create procedure [dbo].[strlogin]  
+(  
+   @username varchar(40),  
+   @email varchar(50),  
+   @password varchar(20)  
+)  
+as  
+insert into registration values(@username,@email,@password ) 
+
+protected void Button1_Click(object sender, EventArgs e)  
+{  
+    string strcon = "Data Source=.;uid=sa;pwd=Password$2;database=roham";  
+    SqlConnection con = new SqlConnection(strcon);  
+    SqlCommand com = new SqlCommand("CUser", con);  
+    com.CommandType = System.Data.CommandType.StoredProcedure;  
+    SqlParameter p1 = new SqlParameter("username", TextBoxusername.Text);  
+    SqlParameter p2 = new SqlParameter("password", TextBoxpassword.Text);  
+    com.Parameters.Add(p1);  
+    com.Parameters.Add(p2);  
+    con.Open();  
+    SqlDataReader rd = com.ExecuteReader();  
+    if (rd.HasRows)  
+    {  
+        rd.Read();  
+        Label3.Text = "Login successful.";  
+        Label3.Visible = true;  
+    }  
+    else  
+    {  
+        Label3.Text = "Invalid username or password.";  
+        Label3.Visible = true;  
+    }  
+}
+
+
+create PROCEDURE CUser  
+(  
+   @username as varchar(50),  
+   @password as varchar(50)  
+)  
+AS  
+SELECT * FROM registrationtab WHERE username=@username AND password=@password  
+
+protected void Button1_Click(object sender, EventArgs e)  
+{  
+    string strcon = "Data Source=.;uid=sa;pwd=Password$2;database=roham";  
+    SqlConnection con = new SqlConnection(strcon);  
+    SqlCommand com = new SqlCommand("CUser", con);  
+    com.CommandType = System.Data.CommandType.StoredProcedure;  
+    SqlParameter p1 = new SqlParameter("username", TextBoxusername.Text);  
+    SqlParameter p2 = new SqlParameter("password", TextBoxpassword.Text);  
+    com.Parameters.Add(p1);  
+    com.Parameters.Add(p2);  
+    con.Open();  
+    SqlDataReader rd = com.ExecuteReader();  
+    if (rd.HasRows)  
+    {  
+        rd.Read();  
+        Label3.Text = "Login successful.";  
+        Label3.Visible = true;  
+    }  
+    else  
+    {  
+        Label3.Text = "Invalid username or password.";  
+        Label3.Visible = true;  
+    }  
+}  
+
+
+
+
+
+
+//using System;
+namespace BasicClassConcepts
+{
+    internal class Program
+    {
+        static void Main1()
+        {
+            //MyNamespace.Class1 obj;
+            //MyNamespace.n2.Class2 obj2;
+            Console.WriteLine("Hello, World!");
+            System.Console.WriteLine("HW");
+            System.Console.WriteLine("hello");
+        }
+        static void Main2()
+        {
+            Class1 o;  //o is a reference of type Class1
+            o = new Class1(); //new Class1() is an object of type class1
+                              //and o is a reference to this object
+
+            o.Display();
+            o.Display("Vikram");
+
+            //default parameters 
+            
+            //positional parameters
+            Console.WriteLine(o.Add());
+            Console.WriteLine(o.Add(10));
+            Console.WriteLine(o.Add(10, 20));
+            Console.WriteLine(o.Add(10, 20, 30));
+
+            //named parameters
+            Console.WriteLine(o.Add(c: 30));
+            Console.WriteLine(o.Add(c: 30, a: 10));
+            Console.WriteLine(o.Add(b:20, c: 30, a: 10));
+            Console.WriteLine(o.Add(10, c: 30));
+
+        }
+        static void Main()
+        {
+            Class1 o = new Class1();
+            o.DoSomething();
+        }
+    }
+
+    public class Class1 //:Object
+    {
+        public void Display()
+        {
+            Console.WriteLine("Display called");
+        }
+        //func overloading
+        public void Display(string s )
+        {
+            Console.WriteLine("Display called"+ s);
+        }
+
+
+
+       //optional parameters with default value
+       //must be given from rightmost to leftmost
+        public int Add(int a =0, int b=0, int c=0)
+        {
+            return a + b + c;
+        }
+
+
+        public void DoSomething()
+        {
+            int i = 100;
+            Console.WriteLine("Dosomething called");
+
+
+            //local function -cannot have an access specifier
+            //implicitly private
+            //local func can only be called from within the defining function
+            void DoSomethingElse()
+            {
+                Console.WriteLine("Dosomething else called");
+                //can access a variable declared in the outer function
+                Console.WriteLine(++i);
+            }
+
+            Console.WriteLine(i);
+            DoSomethingElse();
+    
+
+        }
+        //to do - try to overload a local func
+        //-- try to have a local func inside another local func
+
+    }
+
+}
+
+namespace MyNamespace
+{
+    namespace n2
+    {
+        public class Class2 { }
+    }
+    public class Class1
+    { }
+}
